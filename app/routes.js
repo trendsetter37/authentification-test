@@ -12,7 +12,11 @@ module.exports = function(app, passport) {
   });
 
   // process login
-  // app.post('/login', blah blah passport);
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
 
   // signup
   app.get('/signup', function(req, res) {

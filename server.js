@@ -12,7 +12,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     configDB = require('./config/database.js'),
-    nunjucks = require('nunjucks');
+    nunjucks = require('express-nunjucks');
 
 // Configuration
 
@@ -23,11 +23,13 @@ require('./config/passport')(passport); // pass passport for configuration
 app.use(morgan('dev')); // log every request to console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); //get info from html forms
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
-nunjucks.configure('views', {
+nunjucks.setup({
   autoescape: true,
-  express: app
-});
+  watch: true
+}, app);
 
 // required for passport
 app.use(session({secret: 'notsosecretafterall'})); // session secret
