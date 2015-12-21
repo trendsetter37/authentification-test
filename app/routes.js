@@ -20,7 +20,11 @@ module.exports = function(app, passport) {
   });
 
   // process signup
-  // app.post('/signup', passport );
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/profile',
+    failureRedirect: '/signup',
+    failureFlash: true
+  }));
 
   //profile section
   app.get('/profile', isLoggedIn, function(req, res) {
